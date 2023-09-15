@@ -1,3 +1,24 @@
+to run project :
+1- download repo link
+2- npm i            (in terminal )
+3- powershell -ExecutionPolicy Bypass -Command "json-server --watch data.json --port 2000"
+4- npm start
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
