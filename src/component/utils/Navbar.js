@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping,  faPhone } from '@fortawesome/free-solid-svg-icons'
 import { Link} from 'react-router-dom';
 import GetLoggedCartHook from '../../hook/cart/GetLoggedCartHook';
+import Swal from 'sweetalert2';
 
 
 
@@ -16,6 +17,41 @@ const Navbar = () => {
   if(localStorage.getItem("user") !== null){
     auth = JSON.parse(localStorage.getItem("user"))
   }
+  let users
+  if(localStorage.getItem("Accounts") !== null){
+    users =JSON.parse(localStorage.getItem("Accounts"))
+  }
+  const deleteUserById=(userEmail,userName)=>{
+    Swal.fire({
+      title: 'هل أنت متأكد ؟',
+      text: `أنت علي وشك أن تقوم بحذف ${userName}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'نعم قم بالحذف',
+      cancelButtonText: "الغاء",
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        let newArr=users.filter((e)=> e.email !== userEmail )
+        if(auth?.email === userEmail){
+          localStorage.setItem("Accounts",JSON.stringify(newArr))
+          localStorage.removeItem("user")
+          Swal.fire(
+            'تمت!',
+            'لقد قمت بحذف المنتج',
+            'success'
+          ).then((result)=>{
+            if (result.isConfirmed !==false){
+              window.location.href="/login"
+            }
+          })
+        }
+        
+      }
+    })
+  }
+
    const [active ,setActive] =useState(false)
 
     useEffect(() => {
@@ -58,10 +94,12 @@ const Navbar = () => {
             <span className='ms-1'>2425110111</span>
             </div>
          
-          <Link  className="text-reset cart me-3" to="/cart">
+        {
+          auth?.role ==="user" ?   <Link  className="text-reset cart me-3" to="/cart">
           <FontAwesomeIcon icon={faCartShopping} />
            <span style={!itemsNum ?{display:"none"} : {display: "flex"}} className='cartItemsQuantity'>{itemsNum || 0}</span> 
-          </Link>
+          </Link>:null
+        }
     
           
         
@@ -89,6 +127,9 @@ const Navbar = () => {
             <ul>
                <li>
                 <Link onClick={()=>window.scrollTo({ top: 0, behavior: 'smooth' })} style={{color:"white"}}  to="/Myprofile">الصفحة الشخصية</Link>
+              </li>
+              <li>
+                <a  style={{color:"yellow"}} onClick={()=> deleteUserById(auth.email ,auth.name)} >ازالة الحساب</a>
               </li>
               <li>
               <a style={{color:"red"}} onClick={()=> logOut()}  href="/">تسجيل خروج</a>

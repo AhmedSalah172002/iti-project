@@ -19,6 +19,7 @@ import CartPage from "./pages/CartPage/CartPage";
 import ProtectedRouteHook from "./hook/auth/ProtectedRouteHook";
 import ProtectedRoute from "./component/utils/ProtectedRoute";
 import UserProfilePage from "./pages/userPage/UserProfilePage";
+import AdminUsersPage from "./pages/AdminPages/AdminUsersPage";
 
 function App() {
   const [isUser, isAdmin, userData] = ProtectedRouteHook()
@@ -51,6 +52,7 @@ function App() {
           <Route path="admin/add-product" element={<AdminPage/>} />
           <Route path="admin/products" element={<AdminProductsPage/>} />
           <Route path="products/edit/:ProductId" element={<AdminEditProductPage  />} />
+          <Route path="admin/users" element={<AdminUsersPage/>} />
         </Route> 
           
           

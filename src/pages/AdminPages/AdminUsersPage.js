@@ -2,10 +2,12 @@ import React from 'react'
 import AdminHeader from '../../component/Admin/AdminHeader'
 import AdminSidebar from '../../component/Admin/AdminSidebar'
 import AdminUsers from '../../component/Admin/AdminUsers'
-import GetUsersHook from '../../hook/admin/GetUsersHook'
 
 const AdminUsersPage = () => {
-  const [users ,pageCount ,onPress] =GetUsersHook(8)
+  let users
+  if(localStorage.getItem("Accounts") !== null){
+    users =JSON.parse(localStorage.getItem("Accounts"))
+  }
   return (
     <>
    <div dir='rtl'>
@@ -13,7 +15,7 @@ const AdminUsersPage = () => {
    
    <div className='d-flex'>
    <AdminSidebar active="users" />
-   <AdminUsers users={users} pageCount={pageCount} onPress={onPress} />
+   <AdminUsers users={users} />
    </div>
    </div>
    </>

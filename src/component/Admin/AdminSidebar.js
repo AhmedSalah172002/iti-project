@@ -29,7 +29,12 @@ const AdminSidebar = ({active}) => {
 
 
 
-
+<Link to="/admin/users" >
+<div style={active ==="user"?{color:"#3874ff",borderBottom:"2px solid #3874ff"}:null} className="admin-fea pb-2 d-flex align-items-center ">
+ <img src={users} alt="addProduct" style={{width:"50px"}} />
+ <h6 className='me-2'> المستخدمين</h6>
+ </div>
+</Link>
 
 
  
